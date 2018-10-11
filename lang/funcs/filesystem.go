@@ -63,6 +63,48 @@ func MakeFileFunc(baseDir string, encBase64 bool) function.Function {
 	})
 }
 
+// MakeFileExistsFunc constructs a function that takes a path
+// and determines whether a file exists at that path
+func MakeFileExistsFunc(baseDir string) function.Function {
+	return function.New(&function.Spec{
+		Params: []function.Parameter{
+			{
+				Name: "path",
+				Type: cty.String,
+			},
+		},
+		Type: function.StaticReturnType(cty.Bool),
+		Impl: func(args []cty.Value, retType cty.Type) (cty.Value, error) {
+			path := args[0].AsString()
+			path, err := homedir.Expand(path)
+			if err != nil {
+				return cty.UnknownVal(cty.Bool), fmt.Errorf("failed to expand ~: %s", err)
+			}
+
+			if !filepath.IsAbs(path) {
+				path = filepath.Join(baseDir, path)
+			}
+
+			// Ensure that the path is canonical for the host OS
+			path = filepath.Clean(path)
+
+			fi, err := os.Stat(path)
+			if err != nil {
+				if os.IsNotExist(err) {
+					return cty.False, nil
+				}
+				return cty.UnknownVal(cty.Bool), fmt.Errorf("failed to stat %s", path)
+			}
+
+			if fi.Mode().IsRegular() {
+				return cty.True, nil
+			}
+
+			return cty.False, fmt.Errorf("%s is not a regular file, but %q", fi.Mode().String())
+		},
+	})
+}
+
 // BasenameFunc constructs a function that takes a string containing a filesystem path
 // and removes all except the last portion from it.
 var BasenameFunc = function.New(&function.Spec{
