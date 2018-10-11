@@ -280,7 +280,12 @@ func (p *Provider) Apply(
 		return nil, fmt.Errorf("unknown resource type: %s", info.Type)
 	}
 
-	return r.Apply(s, d, p.meta)
+	is, err := r.Apply(s, d, p.meta)
+	if err != nil {
+		return is, fmt.Errorf("%s: %s", info.Type, err)
+	}
+
+	return is, nil
 }
 
 // Diff implementation of terraform.ResourceProvider interface.
