@@ -3,8 +3,12 @@ package plugin
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
+	"log"
 	"strconv"
 
+	"github.com/hashicorp/errwrap"
+	"github.com/kr/pretty"
 	"github.com/zclconf/go-cty/cty"
 	"github.com/zclconf/go-cty/cty/msgpack"
 	context "golang.org/x/net/context"
@@ -512,6 +516,9 @@ func (s *GRPCProviderServer) ApplyResourceChange(_ context.Context, req *proto.A
 
 	newInstanceState, err := s.provider.Apply(info, priorState, diff)
 	if err != nil {
+		id := info.Type
+		log.Printf("[DEBUG] info: %s", pretty.Sprint(info))
+		err = errwrap.Wrapf(fmt.Sprintf("%s: {{err}}", id), err)
 		resp.Diagnostics = convert.AppendProtoDiag(resp.Diagnostics, err)
 		return resp, nil
 	}

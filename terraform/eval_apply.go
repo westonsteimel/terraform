@@ -6,6 +6,7 @@ import (
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/hcl2/hcl"
+	"github.com/kr/pretty"
 	"github.com/zclconf/go-cty/cty"
 
 	"github.com/hashicorp/terraform/addrs"
@@ -164,8 +165,8 @@ func (n *EvalApply) Eval(ctx EvalContext) (interface{}, error) {
 				tfdiags.Error,
 				"Provider returned invalid result object after apply",
 				fmt.Sprintf(
-					"After applying a %s plan, the provider returned a non-null object for %s. Destroying should always produce a null value, so this is always a bug in the provider and should be reported in the provider's own repository. Terraform will still save this errant object in the state for debugging and recovery.",
-					change.Action, n.Addr.Absolute(ctx.Path()),
+					"After applying a %s plan, the provider returned a non-null object for %s. Destroying should always produce a null value, so this is always a bug in the provider and should be reported in the provider's own repository. Terraform will still save this errant object in the state for debugging and recovery.\n\n%s",
+					change.Action, n.Addr.Absolute(ctx.Path()), pretty.Sprint(newVal),
 				),
 			))
 		}

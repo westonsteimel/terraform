@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"sort"
 	"sync"
 
@@ -282,9 +283,9 @@ func (p *Provider) Apply(
 
 	is, err := r.Apply(s, d, p.meta)
 	if err != nil {
-		return is, fmt.Errorf("%s: %s", info.Type, err)
+		log.Printf("[DEBUG] Provider.Apply returning error: %#v", err)
+		return is, err
 	}
-
 	return is, nil
 }
 
@@ -298,7 +299,12 @@ func (p *Provider) Diff(
 		return nil, fmt.Errorf("unknown resource type: %s", info.Type)
 	}
 
-	return r.Diff(s, c, p.meta)
+	is, err := r.Diff(s, c, p.meta)
+	if err != nil {
+		log.Printf("[DEBUG] Provider.Diff returning error: %#v", err)
+		return is, err
+	}
+	return is, nil
 }
 
 // Refresh implementation of terraform.ResourceProvider interface.
@@ -310,7 +316,12 @@ func (p *Provider) Refresh(
 		return nil, fmt.Errorf("unknown resource type: %s", info.Type)
 	}
 
-	return r.Refresh(s, p.meta)
+	is, err := r.Refresh(s, p.meta)
+	if err != nil {
+		log.Printf("[DEBUG] Provider.Refresh returning error: %#v", err)
+		return is, err
+	}
+	return is, nil
 }
 
 // Resources implementation of terraform.ResourceProvider interface.
@@ -415,7 +426,12 @@ func (p *Provider) ReadDataDiff(
 		return nil, fmt.Errorf("unknown data source: %s", info.Type)
 	}
 
-	return r.Diff(nil, c, p.meta)
+	is, err := r.Diff(nil, c, p.meta)
+	if err != nil {
+		log.Printf("[DEBUG] Provider.ReadDataDiff returning error: %#v", err)
+		return is, err
+	}
+	return is, nil
 }
 
 // RefreshData implementation of terraform.ResourceProvider interface.
@@ -428,7 +444,12 @@ func (p *Provider) ReadDataApply(
 		return nil, fmt.Errorf("unknown data source: %s", info.Type)
 	}
 
-	return r.ReadDataApply(d, p.meta)
+	is, err := r.ReadDataApply(d, p.meta)
+	if err != nil {
+		log.Printf("[DEBUG] Provider.ReadDataApply returning error: %#v", err)
+		return is, err
+	}
+	return is, nil
 }
 
 // DataSources implementation of terraform.ResourceProvider interface.

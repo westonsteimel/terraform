@@ -3,9 +3,11 @@
 
 package proto
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 import (
 	context "golang.org/x/net/context"
@@ -36,6 +38,7 @@ var Diagnostic_Severity_name = map[int32]string{
 	1: "ERROR",
 	2: "WARNING",
 }
+
 var Diagnostic_Severity_value = map[string]int32{
 	"INVALID": 0,
 	"ERROR":   1,
@@ -45,8 +48,9 @@ var Diagnostic_Severity_value = map[string]int32{
 func (x Diagnostic_Severity) String() string {
 	return proto.EnumName(Diagnostic_Severity_name, int32(x))
 }
+
 func (Diagnostic_Severity) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{1, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{1, 0}
 }
 
 type Schema_NestedBlock_NestingMode int32
@@ -66,6 +70,7 @@ var Schema_NestedBlock_NestingMode_name = map[int32]string{
 	3: "SET",
 	4: "MAP",
 }
+
 var Schema_NestedBlock_NestingMode_value = map[string]int32{
 	"INVALID": 0,
 	"SINGLE":  1,
@@ -77,8 +82,9 @@ var Schema_NestedBlock_NestingMode_value = map[string]int32{
 func (x Schema_NestedBlock_NestingMode) String() string {
 	return proto.EnumName(Schema_NestedBlock_NestingMode_name, int32(x))
 }
+
 func (Schema_NestedBlock_NestingMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{5, 2, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{5, 2, 0}
 }
 
 // DynamicValue is an opaque encoding of terraform data, with the field name
@@ -95,16 +101,17 @@ func (m *DynamicValue) Reset()         { *m = DynamicValue{} }
 func (m *DynamicValue) String() string { return proto.CompactTextString(m) }
 func (*DynamicValue) ProtoMessage()    {}
 func (*DynamicValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{0}
+	return fileDescriptor_22a625af4bc1cc87, []int{0}
 }
+
 func (m *DynamicValue) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DynamicValue.Unmarshal(m, b)
 }
 func (m *DynamicValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DynamicValue.Marshal(b, m, deterministic)
 }
-func (dst *DynamicValue) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DynamicValue.Merge(dst, src)
+func (m *DynamicValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DynamicValue.Merge(m, src)
 }
 func (m *DynamicValue) XXX_Size() int {
 	return xxx_messageInfo_DynamicValue.Size(m)
@@ -130,10 +137,10 @@ func (m *DynamicValue) GetJson() []byte {
 }
 
 type Diagnostic struct {
-	Severity             Diagnostic_Severity `protobuf:"varint,1,opt,name=severity,enum=proto.Diagnostic_Severity" json:"severity,omitempty"`
-	Summary              string              `protobuf:"bytes,2,opt,name=summary" json:"summary,omitempty"`
-	Detail               string              `protobuf:"bytes,3,opt,name=detail" json:"detail,omitempty"`
-	Attribute            *AttributePath      `protobuf:"bytes,4,opt,name=attribute" json:"attribute,omitempty"`
+	Severity             Diagnostic_Severity `protobuf:"varint,1,opt,name=severity,proto3,enum=proto.Diagnostic_Severity" json:"severity,omitempty"`
+	Summary              string              `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
+	Detail               string              `protobuf:"bytes,3,opt,name=detail,proto3" json:"detail,omitempty"`
+	Attribute            *AttributePath      `protobuf:"bytes,4,opt,name=attribute,proto3" json:"attribute,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
 	XXX_unrecognized     []byte              `json:"-"`
 	XXX_sizecache        int32               `json:"-"`
@@ -143,16 +150,17 @@ func (m *Diagnostic) Reset()         { *m = Diagnostic{} }
 func (m *Diagnostic) String() string { return proto.CompactTextString(m) }
 func (*Diagnostic) ProtoMessage()    {}
 func (*Diagnostic) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{1}
+	return fileDescriptor_22a625af4bc1cc87, []int{1}
 }
+
 func (m *Diagnostic) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Diagnostic.Unmarshal(m, b)
 }
 func (m *Diagnostic) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Diagnostic.Marshal(b, m, deterministic)
 }
-func (dst *Diagnostic) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Diagnostic.Merge(dst, src)
+func (m *Diagnostic) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Diagnostic.Merge(m, src)
 }
 func (m *Diagnostic) XXX_Size() int {
 	return xxx_messageInfo_Diagnostic.Size(m)
@@ -192,7 +200,7 @@ func (m *Diagnostic) GetAttribute() *AttributePath {
 }
 
 type AttributePath struct {
-	Steps                []*AttributePath_Step `protobuf:"bytes,1,rep,name=steps" json:"steps,omitempty"`
+	Steps                []*AttributePath_Step `protobuf:"bytes,1,rep,name=steps,proto3" json:"steps,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
 	XXX_sizecache        int32                 `json:"-"`
@@ -202,16 +210,17 @@ func (m *AttributePath) Reset()         { *m = AttributePath{} }
 func (m *AttributePath) String() string { return proto.CompactTextString(m) }
 func (*AttributePath) ProtoMessage()    {}
 func (*AttributePath) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{2}
+	return fileDescriptor_22a625af4bc1cc87, []int{2}
 }
+
 func (m *AttributePath) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AttributePath.Unmarshal(m, b)
 }
 func (m *AttributePath) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AttributePath.Marshal(b, m, deterministic)
 }
-func (dst *AttributePath) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AttributePath.Merge(dst, src)
+func (m *AttributePath) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AttributePath.Merge(m, src)
 }
 func (m *AttributePath) XXX_Size() int {
 	return xxx_messageInfo_AttributePath.Size(m)
@@ -244,16 +253,17 @@ func (m *AttributePath_Step) Reset()         { *m = AttributePath_Step{} }
 func (m *AttributePath_Step) String() string { return proto.CompactTextString(m) }
 func (*AttributePath_Step) ProtoMessage()    {}
 func (*AttributePath_Step) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{2, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{2, 0}
 }
+
 func (m *AttributePath_Step) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AttributePath_Step.Unmarshal(m, b)
 }
 func (m *AttributePath_Step) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_AttributePath_Step.Marshal(b, m, deterministic)
 }
-func (dst *AttributePath_Step) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AttributePath_Step.Merge(dst, src)
+func (m *AttributePath_Step) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AttributePath_Step.Merge(m, src)
 }
 func (m *AttributePath_Step) XXX_Size() int {
 	return xxx_messageInfo_AttributePath_Step.Size(m)
@@ -269,18 +279,22 @@ type isAttributePath_Step_Selector interface {
 }
 
 type AttributePath_Step_AttributeName struct {
-	AttributeName string `protobuf:"bytes,1,opt,name=attribute_name,json=attributeName,oneof"`
-}
-type AttributePath_Step_ElementKeyString struct {
-	ElementKeyString string `protobuf:"bytes,2,opt,name=element_key_string,json=elementKeyString,oneof"`
-}
-type AttributePath_Step_ElementKeyInt struct {
-	ElementKeyInt int64 `protobuf:"varint,3,opt,name=element_key_int,json=elementKeyInt,oneof"`
+	AttributeName string `protobuf:"bytes,1,opt,name=attribute_name,json=attributeName,proto3,oneof"`
 }
 
-func (*AttributePath_Step_AttributeName) isAttributePath_Step_Selector()    {}
+type AttributePath_Step_ElementKeyString struct {
+	ElementKeyString string `protobuf:"bytes,2,opt,name=element_key_string,json=elementKeyString,proto3,oneof"`
+}
+
+type AttributePath_Step_ElementKeyInt struct {
+	ElementKeyInt int64 `protobuf:"varint,3,opt,name=element_key_int,json=elementKeyInt,proto3,oneof"`
+}
+
+func (*AttributePath_Step_AttributeName) isAttributePath_Step_Selector() {}
+
 func (*AttributePath_Step_ElementKeyString) isAttributePath_Step_Selector() {}
-func (*AttributePath_Step_ElementKeyInt) isAttributePath_Step_Selector()    {}
+
+func (*AttributePath_Step_ElementKeyInt) isAttributePath_Step_Selector() {}
 
 func (m *AttributePath_Step) GetSelector() isAttributePath_Step_Selector {
 	if m != nil {
@@ -400,16 +414,17 @@ func (m *Stop) Reset()         { *m = Stop{} }
 func (m *Stop) String() string { return proto.CompactTextString(m) }
 func (*Stop) ProtoMessage()    {}
 func (*Stop) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{3}
+	return fileDescriptor_22a625af4bc1cc87, []int{3}
 }
+
 func (m *Stop) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Stop.Unmarshal(m, b)
 }
 func (m *Stop) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Stop.Marshal(b, m, deterministic)
 }
-func (dst *Stop) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Stop.Merge(dst, src)
+func (m *Stop) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Stop.Merge(m, src)
 }
 func (m *Stop) XXX_Size() int {
 	return xxx_messageInfo_Stop.Size(m)
@@ -430,16 +445,17 @@ func (m *Stop_Request) Reset()         { *m = Stop_Request{} }
 func (m *Stop_Request) String() string { return proto.CompactTextString(m) }
 func (*Stop_Request) ProtoMessage()    {}
 func (*Stop_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{3, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{3, 0}
 }
+
 func (m *Stop_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Stop_Request.Unmarshal(m, b)
 }
 func (m *Stop_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Stop_Request.Marshal(b, m, deterministic)
 }
-func (dst *Stop_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Stop_Request.Merge(dst, src)
+func (m *Stop_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Stop_Request.Merge(m, src)
 }
 func (m *Stop_Request) XXX_Size() int {
 	return xxx_messageInfo_Stop_Request.Size(m)
@@ -451,7 +467,7 @@ func (m *Stop_Request) XXX_DiscardUnknown() {
 var xxx_messageInfo_Stop_Request proto.InternalMessageInfo
 
 type Stop_Response struct {
-	Error                string   `protobuf:"bytes,1,opt,name=Error" json:"Error,omitempty"`
+	Error                string   `protobuf:"bytes,1,opt,name=Error,proto3" json:"Error,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -461,16 +477,17 @@ func (m *Stop_Response) Reset()         { *m = Stop_Response{} }
 func (m *Stop_Response) String() string { return proto.CompactTextString(m) }
 func (*Stop_Response) ProtoMessage()    {}
 func (*Stop_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{3, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{3, 1}
 }
+
 func (m *Stop_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Stop_Response.Unmarshal(m, b)
 }
 func (m *Stop_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Stop_Response.Marshal(b, m, deterministic)
 }
-func (dst *Stop_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Stop_Response.Merge(dst, src)
+func (m *Stop_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Stop_Response.Merge(m, src)
 }
 func (m *Stop_Response) XXX_Size() int {
 	return xxx_messageInfo_Stop_Response.Size(m)
@@ -493,7 +510,7 @@ func (m *Stop_Response) GetError() string {
 // in bytes, or the legacy flatmap format as a map of strings.
 type RawState struct {
 	Json                 []byte            `protobuf:"bytes,1,opt,name=json,proto3" json:"json,omitempty"`
-	Flatmap              map[string]string `protobuf:"bytes,2,rep,name=flatmap" json:"flatmap,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Flatmap              map[string]string `protobuf:"bytes,2,rep,name=flatmap,proto3" json:"flatmap,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -503,16 +520,17 @@ func (m *RawState) Reset()         { *m = RawState{} }
 func (m *RawState) String() string { return proto.CompactTextString(m) }
 func (*RawState) ProtoMessage()    {}
 func (*RawState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{4}
+	return fileDescriptor_22a625af4bc1cc87, []int{4}
 }
+
 func (m *RawState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RawState.Unmarshal(m, b)
 }
 func (m *RawState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RawState.Marshal(b, m, deterministic)
 }
-func (dst *RawState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RawState.Merge(dst, src)
+func (m *RawState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RawState.Merge(m, src)
 }
 func (m *RawState) XXX_Size() int {
 	return xxx_messageInfo_RawState.Size(m)
@@ -542,9 +560,9 @@ type Schema struct {
 	// The version of the schema.
 	// Schemas are versioned, so that providers can upgrade a saved resource
 	// state when the schema is changed.
-	Version int64 `protobuf:"varint,1,opt,name=version" json:"version,omitempty"`
+	Version int64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
 	// Block is the top level configuration block for this schema.
-	Block                *Schema_Block `protobuf:"bytes,2,opt,name=block" json:"block,omitempty"`
+	Block                *Schema_Block `protobuf:"bytes,2,opt,name=block,proto3" json:"block,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -554,16 +572,17 @@ func (m *Schema) Reset()         { *m = Schema{} }
 func (m *Schema) String() string { return proto.CompactTextString(m) }
 func (*Schema) ProtoMessage()    {}
 func (*Schema) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{5}
+	return fileDescriptor_22a625af4bc1cc87, []int{5}
 }
+
 func (m *Schema) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Schema.Unmarshal(m, b)
 }
 func (m *Schema) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Schema.Marshal(b, m, deterministic)
 }
-func (dst *Schema) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Schema.Merge(dst, src)
+func (m *Schema) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Schema.Merge(m, src)
 }
 func (m *Schema) XXX_Size() int {
 	return xxx_messageInfo_Schema.Size(m)
@@ -589,9 +608,9 @@ func (m *Schema) GetBlock() *Schema_Block {
 }
 
 type Schema_Block struct {
-	Version              int64                 `protobuf:"varint,1,opt,name=version" json:"version,omitempty"`
-	Attributes           []*Schema_Attribute   `protobuf:"bytes,2,rep,name=attributes" json:"attributes,omitempty"`
-	BlockTypes           []*Schema_NestedBlock `protobuf:"bytes,3,rep,name=block_types,json=blockTypes" json:"block_types,omitempty"`
+	Version              int64                 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+	Attributes           []*Schema_Attribute   `protobuf:"bytes,2,rep,name=attributes,proto3" json:"attributes,omitempty"`
+	BlockTypes           []*Schema_NestedBlock `protobuf:"bytes,3,rep,name=block_types,json=blockTypes,proto3" json:"block_types,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
 	XXX_sizecache        int32                 `json:"-"`
@@ -601,16 +620,17 @@ func (m *Schema_Block) Reset()         { *m = Schema_Block{} }
 func (m *Schema_Block) String() string { return proto.CompactTextString(m) }
 func (*Schema_Block) ProtoMessage()    {}
 func (*Schema_Block) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{5, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{5, 0}
 }
+
 func (m *Schema_Block) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Schema_Block.Unmarshal(m, b)
 }
 func (m *Schema_Block) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Schema_Block.Marshal(b, m, deterministic)
 }
-func (dst *Schema_Block) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Schema_Block.Merge(dst, src)
+func (m *Schema_Block) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Schema_Block.Merge(m, src)
 }
 func (m *Schema_Block) XXX_Size() int {
 	return xxx_messageInfo_Schema_Block.Size(m)
@@ -643,13 +663,13 @@ func (m *Schema_Block) GetBlockTypes() []*Schema_NestedBlock {
 }
 
 type Schema_Attribute struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Type                 []byte   `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	Description          string   `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
-	Required             bool     `protobuf:"varint,4,opt,name=required" json:"required,omitempty"`
-	Optional             bool     `protobuf:"varint,5,opt,name=optional" json:"optional,omitempty"`
-	Computed             bool     `protobuf:"varint,6,opt,name=computed" json:"computed,omitempty"`
-	Sensitive            bool     `protobuf:"varint,7,opt,name=sensitive" json:"sensitive,omitempty"`
+	Description          string   `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Required             bool     `protobuf:"varint,4,opt,name=required,proto3" json:"required,omitempty"`
+	Optional             bool     `protobuf:"varint,5,opt,name=optional,proto3" json:"optional,omitempty"`
+	Computed             bool     `protobuf:"varint,6,opt,name=computed,proto3" json:"computed,omitempty"`
+	Sensitive            bool     `protobuf:"varint,7,opt,name=sensitive,proto3" json:"sensitive,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -659,16 +679,17 @@ func (m *Schema_Attribute) Reset()         { *m = Schema_Attribute{} }
 func (m *Schema_Attribute) String() string { return proto.CompactTextString(m) }
 func (*Schema_Attribute) ProtoMessage()    {}
 func (*Schema_Attribute) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{5, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{5, 1}
 }
+
 func (m *Schema_Attribute) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Schema_Attribute.Unmarshal(m, b)
 }
 func (m *Schema_Attribute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Schema_Attribute.Marshal(b, m, deterministic)
 }
-func (dst *Schema_Attribute) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Schema_Attribute.Merge(dst, src)
+func (m *Schema_Attribute) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Schema_Attribute.Merge(m, src)
 }
 func (m *Schema_Attribute) XXX_Size() int {
 	return xxx_messageInfo_Schema_Attribute.Size(m)
@@ -729,11 +750,11 @@ func (m *Schema_Attribute) GetSensitive() bool {
 }
 
 type Schema_NestedBlock struct {
-	TypeName             string                         `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	Block                *Schema_Block                  `protobuf:"bytes,2,opt,name=block" json:"block,omitempty"`
-	Nesting              Schema_NestedBlock_NestingMode `protobuf:"varint,3,opt,name=nesting,enum=proto.Schema_NestedBlock_NestingMode" json:"nesting,omitempty"`
-	MinItems             int64                          `protobuf:"varint,4,opt,name=min_items,json=minItems" json:"min_items,omitempty"`
-	MaxItems             int64                          `protobuf:"varint,5,opt,name=max_items,json=maxItems" json:"max_items,omitempty"`
+	TypeName             string                         `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	Block                *Schema_Block                  `protobuf:"bytes,2,opt,name=block,proto3" json:"block,omitempty"`
+	Nesting              Schema_NestedBlock_NestingMode `protobuf:"varint,3,opt,name=nesting,proto3,enum=proto.Schema_NestedBlock_NestingMode" json:"nesting,omitempty"`
+	MinItems             int64                          `protobuf:"varint,4,opt,name=min_items,json=minItems,proto3" json:"min_items,omitempty"`
+	MaxItems             int64                          `protobuf:"varint,5,opt,name=max_items,json=maxItems,proto3" json:"max_items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
 	XXX_unrecognized     []byte                         `json:"-"`
 	XXX_sizecache        int32                          `json:"-"`
@@ -743,16 +764,17 @@ func (m *Schema_NestedBlock) Reset()         { *m = Schema_NestedBlock{} }
 func (m *Schema_NestedBlock) String() string { return proto.CompactTextString(m) }
 func (*Schema_NestedBlock) ProtoMessage()    {}
 func (*Schema_NestedBlock) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{5, 2}
+	return fileDescriptor_22a625af4bc1cc87, []int{5, 2}
 }
+
 func (m *Schema_NestedBlock) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Schema_NestedBlock.Unmarshal(m, b)
 }
 func (m *Schema_NestedBlock) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Schema_NestedBlock.Marshal(b, m, deterministic)
 }
-func (dst *Schema_NestedBlock) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Schema_NestedBlock.Merge(dst, src)
+func (m *Schema_NestedBlock) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Schema_NestedBlock.Merge(m, src)
 }
 func (m *Schema_NestedBlock) XXX_Size() int {
 	return xxx_messageInfo_Schema_NestedBlock.Size(m)
@@ -808,16 +830,17 @@ func (m *GetProviderSchema) Reset()         { *m = GetProviderSchema{} }
 func (m *GetProviderSchema) String() string { return proto.CompactTextString(m) }
 func (*GetProviderSchema) ProtoMessage()    {}
 func (*GetProviderSchema) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{6}
+	return fileDescriptor_22a625af4bc1cc87, []int{6}
 }
+
 func (m *GetProviderSchema) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetProviderSchema.Unmarshal(m, b)
 }
 func (m *GetProviderSchema) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetProviderSchema.Marshal(b, m, deterministic)
 }
-func (dst *GetProviderSchema) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProviderSchema.Merge(dst, src)
+func (m *GetProviderSchema) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProviderSchema.Merge(m, src)
 }
 func (m *GetProviderSchema) XXX_Size() int {
 	return xxx_messageInfo_GetProviderSchema.Size(m)
@@ -838,16 +861,17 @@ func (m *GetProviderSchema_Request) Reset()         { *m = GetProviderSchema_Req
 func (m *GetProviderSchema_Request) String() string { return proto.CompactTextString(m) }
 func (*GetProviderSchema_Request) ProtoMessage()    {}
 func (*GetProviderSchema_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{6, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{6, 0}
 }
+
 func (m *GetProviderSchema_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetProviderSchema_Request.Unmarshal(m, b)
 }
 func (m *GetProviderSchema_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetProviderSchema_Request.Marshal(b, m, deterministic)
 }
-func (dst *GetProviderSchema_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProviderSchema_Request.Merge(dst, src)
+func (m *GetProviderSchema_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProviderSchema_Request.Merge(m, src)
 }
 func (m *GetProviderSchema_Request) XXX_Size() int {
 	return xxx_messageInfo_GetProviderSchema_Request.Size(m)
@@ -859,10 +883,10 @@ func (m *GetProviderSchema_Request) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetProviderSchema_Request proto.InternalMessageInfo
 
 type GetProviderSchema_Response struct {
-	Provider             *Schema            `protobuf:"bytes,1,opt,name=provider" json:"provider,omitempty"`
-	ResourceSchemas      map[string]*Schema `protobuf:"bytes,2,rep,name=resource_schemas,json=resourceSchemas" json:"resource_schemas,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	DataSourceSchemas    map[string]*Schema `protobuf:"bytes,3,rep,name=data_source_schemas,json=dataSourceSchemas" json:"data_source_schemas,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Diagnostics          []*Diagnostic      `protobuf:"bytes,4,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Provider             *Schema            `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`
+	ResourceSchemas      map[string]*Schema `protobuf:"bytes,2,rep,name=resource_schemas,json=resourceSchemas,proto3" json:"resource_schemas,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	DataSourceSchemas    map[string]*Schema `protobuf:"bytes,3,rep,name=data_source_schemas,json=dataSourceSchemas,proto3" json:"data_source_schemas,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Diagnostics          []*Diagnostic      `protobuf:"bytes,4,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
 	XXX_unrecognized     []byte             `json:"-"`
 	XXX_sizecache        int32              `json:"-"`
@@ -872,16 +896,17 @@ func (m *GetProviderSchema_Response) Reset()         { *m = GetProviderSchema_Re
 func (m *GetProviderSchema_Response) String() string { return proto.CompactTextString(m) }
 func (*GetProviderSchema_Response) ProtoMessage()    {}
 func (*GetProviderSchema_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{6, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{6, 1}
 }
+
 func (m *GetProviderSchema_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetProviderSchema_Response.Unmarshal(m, b)
 }
 func (m *GetProviderSchema_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetProviderSchema_Response.Marshal(b, m, deterministic)
 }
-func (dst *GetProviderSchema_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProviderSchema_Response.Merge(dst, src)
+func (m *GetProviderSchema_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProviderSchema_Response.Merge(m, src)
 }
 func (m *GetProviderSchema_Response) XXX_Size() int {
 	return xxx_messageInfo_GetProviderSchema_Response.Size(m)
@@ -930,16 +955,17 @@ func (m *ValidateProviderConfig) Reset()         { *m = ValidateProviderConfig{}
 func (m *ValidateProviderConfig) String() string { return proto.CompactTextString(m) }
 func (*ValidateProviderConfig) ProtoMessage()    {}
 func (*ValidateProviderConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{7}
+	return fileDescriptor_22a625af4bc1cc87, []int{7}
 }
+
 func (m *ValidateProviderConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateProviderConfig.Unmarshal(m, b)
 }
 func (m *ValidateProviderConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateProviderConfig.Marshal(b, m, deterministic)
 }
-func (dst *ValidateProviderConfig) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateProviderConfig.Merge(dst, src)
+func (m *ValidateProviderConfig) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateProviderConfig.Merge(m, src)
 }
 func (m *ValidateProviderConfig) XXX_Size() int {
 	return xxx_messageInfo_ValidateProviderConfig.Size(m)
@@ -951,7 +977,7 @@ func (m *ValidateProviderConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_ValidateProviderConfig proto.InternalMessageInfo
 
 type ValidateProviderConfig_Request struct {
-	Config               *DynamicValue `protobuf:"bytes,1,opt,name=config" json:"config,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -961,16 +987,17 @@ func (m *ValidateProviderConfig_Request) Reset()         { *m = ValidateProvider
 func (m *ValidateProviderConfig_Request) String() string { return proto.CompactTextString(m) }
 func (*ValidateProviderConfig_Request) ProtoMessage()    {}
 func (*ValidateProviderConfig_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{7, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{7, 0}
 }
+
 func (m *ValidateProviderConfig_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateProviderConfig_Request.Unmarshal(m, b)
 }
 func (m *ValidateProviderConfig_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateProviderConfig_Request.Marshal(b, m, deterministic)
 }
-func (dst *ValidateProviderConfig_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateProviderConfig_Request.Merge(dst, src)
+func (m *ValidateProviderConfig_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateProviderConfig_Request.Merge(m, src)
 }
 func (m *ValidateProviderConfig_Request) XXX_Size() int {
 	return xxx_messageInfo_ValidateProviderConfig_Request.Size(m)
@@ -989,7 +1016,7 @@ func (m *ValidateProviderConfig_Request) GetConfig() *DynamicValue {
 }
 
 type ValidateProviderConfig_Response struct {
-	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -999,16 +1026,17 @@ func (m *ValidateProviderConfig_Response) Reset()         { *m = ValidateProvide
 func (m *ValidateProviderConfig_Response) String() string { return proto.CompactTextString(m) }
 func (*ValidateProviderConfig_Response) ProtoMessage()    {}
 func (*ValidateProviderConfig_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{7, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{7, 1}
 }
+
 func (m *ValidateProviderConfig_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateProviderConfig_Response.Unmarshal(m, b)
 }
 func (m *ValidateProviderConfig_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateProviderConfig_Response.Marshal(b, m, deterministic)
 }
-func (dst *ValidateProviderConfig_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateProviderConfig_Response.Merge(dst, src)
+func (m *ValidateProviderConfig_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateProviderConfig_Response.Merge(m, src)
 }
 func (m *ValidateProviderConfig_Response) XXX_Size() int {
 	return xxx_messageInfo_ValidateProviderConfig_Response.Size(m)
@@ -1036,16 +1064,17 @@ func (m *UpgradeResourceState) Reset()         { *m = UpgradeResourceState{} }
 func (m *UpgradeResourceState) String() string { return proto.CompactTextString(m) }
 func (*UpgradeResourceState) ProtoMessage()    {}
 func (*UpgradeResourceState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{8}
+	return fileDescriptor_22a625af4bc1cc87, []int{8}
 }
+
 func (m *UpgradeResourceState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpgradeResourceState.Unmarshal(m, b)
 }
 func (m *UpgradeResourceState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpgradeResourceState.Marshal(b, m, deterministic)
 }
-func (dst *UpgradeResourceState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpgradeResourceState.Merge(dst, src)
+func (m *UpgradeResourceState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpgradeResourceState.Merge(m, src)
 }
 func (m *UpgradeResourceState) XXX_Size() int {
 	return xxx_messageInfo_UpgradeResourceState.Size(m)
@@ -1057,15 +1086,15 @@ func (m *UpgradeResourceState) XXX_DiscardUnknown() {
 var xxx_messageInfo_UpgradeResourceState proto.InternalMessageInfo
 
 type UpgradeResourceState_Request struct {
-	TypeName string `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
+	TypeName string `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
 	// version is the schema_version number recorded in the state file
-	Version int64 `protobuf:"varint,2,opt,name=version" json:"version,omitempty"`
+	Version int64 `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
 	// raw_state is the raw states as stored for the resource.  Core does
 	// not have access to the schema of prior_version, so it's the
 	// provider's responsibility to interpret this value using the
 	// appropriate older schema. The raw_state will be the json encoded
 	// state, or a legacy flat-mapped format.
-	RawState             *RawState `protobuf:"bytes,3,opt,name=raw_state,json=rawState" json:"raw_state,omitempty"`
+	RawState             *RawState `protobuf:"bytes,3,opt,name=raw_state,json=rawState,proto3" json:"raw_state,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -1075,16 +1104,17 @@ func (m *UpgradeResourceState_Request) Reset()         { *m = UpgradeResourceSta
 func (m *UpgradeResourceState_Request) String() string { return proto.CompactTextString(m) }
 func (*UpgradeResourceState_Request) ProtoMessage()    {}
 func (*UpgradeResourceState_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{8, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{8, 0}
 }
+
 func (m *UpgradeResourceState_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpgradeResourceState_Request.Unmarshal(m, b)
 }
 func (m *UpgradeResourceState_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpgradeResourceState_Request.Marshal(b, m, deterministic)
 }
-func (dst *UpgradeResourceState_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpgradeResourceState_Request.Merge(dst, src)
+func (m *UpgradeResourceState_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpgradeResourceState_Request.Merge(m, src)
 }
 func (m *UpgradeResourceState_Request) XXX_Size() int {
 	return xxx_messageInfo_UpgradeResourceState_Request.Size(m)
@@ -1120,11 +1150,11 @@ type UpgradeResourceState_Response struct {
 	// new_state is a msgpack-encoded data structure that, when interpreted with
 	// the _current_ schema for this resource type, is functionally equivalent to
 	// that which was given in prior_state_raw.
-	UpgradedState *DynamicValue `protobuf:"bytes,1,opt,name=upgraded_state,json=upgradedState" json:"upgraded_state,omitempty"`
+	UpgradedState *DynamicValue `protobuf:"bytes,1,opt,name=upgraded_state,json=upgradedState,proto3" json:"upgraded_state,omitempty"`
 	// diagnostics describes any errors encountered during migration that could not
 	// be safely resolved, and warnings about any possibly-risky assumptions made
 	// in the upgrade process.
-	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1134,16 +1164,17 @@ func (m *UpgradeResourceState_Response) Reset()         { *m = UpgradeResourceSt
 func (m *UpgradeResourceState_Response) String() string { return proto.CompactTextString(m) }
 func (*UpgradeResourceState_Response) ProtoMessage()    {}
 func (*UpgradeResourceState_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{8, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{8, 1}
 }
+
 func (m *UpgradeResourceState_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpgradeResourceState_Response.Unmarshal(m, b)
 }
 func (m *UpgradeResourceState_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpgradeResourceState_Response.Marshal(b, m, deterministic)
 }
-func (dst *UpgradeResourceState_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpgradeResourceState_Response.Merge(dst, src)
+func (m *UpgradeResourceState_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpgradeResourceState_Response.Merge(m, src)
 }
 func (m *UpgradeResourceState_Response) XXX_Size() int {
 	return xxx_messageInfo_UpgradeResourceState_Response.Size(m)
@@ -1178,16 +1209,17 @@ func (m *ValidateResourceTypeConfig) Reset()         { *m = ValidateResourceType
 func (m *ValidateResourceTypeConfig) String() string { return proto.CompactTextString(m) }
 func (*ValidateResourceTypeConfig) ProtoMessage()    {}
 func (*ValidateResourceTypeConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{9}
+	return fileDescriptor_22a625af4bc1cc87, []int{9}
 }
+
 func (m *ValidateResourceTypeConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateResourceTypeConfig.Unmarshal(m, b)
 }
 func (m *ValidateResourceTypeConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateResourceTypeConfig.Marshal(b, m, deterministic)
 }
-func (dst *ValidateResourceTypeConfig) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateResourceTypeConfig.Merge(dst, src)
+func (m *ValidateResourceTypeConfig) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateResourceTypeConfig.Merge(m, src)
 }
 func (m *ValidateResourceTypeConfig) XXX_Size() int {
 	return xxx_messageInfo_ValidateResourceTypeConfig.Size(m)
@@ -1199,8 +1231,8 @@ func (m *ValidateResourceTypeConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_ValidateResourceTypeConfig proto.InternalMessageInfo
 
 type ValidateResourceTypeConfig_Request struct {
-	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config" json:"config,omitempty"`
+	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1210,16 +1242,17 @@ func (m *ValidateResourceTypeConfig_Request) Reset()         { *m = ValidateReso
 func (m *ValidateResourceTypeConfig_Request) String() string { return proto.CompactTextString(m) }
 func (*ValidateResourceTypeConfig_Request) ProtoMessage()    {}
 func (*ValidateResourceTypeConfig_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{9, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{9, 0}
 }
+
 func (m *ValidateResourceTypeConfig_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateResourceTypeConfig_Request.Unmarshal(m, b)
 }
 func (m *ValidateResourceTypeConfig_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateResourceTypeConfig_Request.Marshal(b, m, deterministic)
 }
-func (dst *ValidateResourceTypeConfig_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateResourceTypeConfig_Request.Merge(dst, src)
+func (m *ValidateResourceTypeConfig_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateResourceTypeConfig_Request.Merge(m, src)
 }
 func (m *ValidateResourceTypeConfig_Request) XXX_Size() int {
 	return xxx_messageInfo_ValidateResourceTypeConfig_Request.Size(m)
@@ -1245,7 +1278,7 @@ func (m *ValidateResourceTypeConfig_Request) GetConfig() *DynamicValue {
 }
 
 type ValidateResourceTypeConfig_Response struct {
-	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1255,16 +1288,17 @@ func (m *ValidateResourceTypeConfig_Response) Reset()         { *m = ValidateRes
 func (m *ValidateResourceTypeConfig_Response) String() string { return proto.CompactTextString(m) }
 func (*ValidateResourceTypeConfig_Response) ProtoMessage()    {}
 func (*ValidateResourceTypeConfig_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{9, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{9, 1}
 }
+
 func (m *ValidateResourceTypeConfig_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateResourceTypeConfig_Response.Unmarshal(m, b)
 }
 func (m *ValidateResourceTypeConfig_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateResourceTypeConfig_Response.Marshal(b, m, deterministic)
 }
-func (dst *ValidateResourceTypeConfig_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateResourceTypeConfig_Response.Merge(dst, src)
+func (m *ValidateResourceTypeConfig_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateResourceTypeConfig_Response.Merge(m, src)
 }
 func (m *ValidateResourceTypeConfig_Response) XXX_Size() int {
 	return xxx_messageInfo_ValidateResourceTypeConfig_Response.Size(m)
@@ -1292,16 +1326,17 @@ func (m *ValidateDataSourceConfig) Reset()         { *m = ValidateDataSourceConf
 func (m *ValidateDataSourceConfig) String() string { return proto.CompactTextString(m) }
 func (*ValidateDataSourceConfig) ProtoMessage()    {}
 func (*ValidateDataSourceConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{10}
+	return fileDescriptor_22a625af4bc1cc87, []int{10}
 }
+
 func (m *ValidateDataSourceConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateDataSourceConfig.Unmarshal(m, b)
 }
 func (m *ValidateDataSourceConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateDataSourceConfig.Marshal(b, m, deterministic)
 }
-func (dst *ValidateDataSourceConfig) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateDataSourceConfig.Merge(dst, src)
+func (m *ValidateDataSourceConfig) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateDataSourceConfig.Merge(m, src)
 }
 func (m *ValidateDataSourceConfig) XXX_Size() int {
 	return xxx_messageInfo_ValidateDataSourceConfig.Size(m)
@@ -1313,8 +1348,8 @@ func (m *ValidateDataSourceConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_ValidateDataSourceConfig proto.InternalMessageInfo
 
 type ValidateDataSourceConfig_Request struct {
-	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config" json:"config,omitempty"`
+	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1324,16 +1359,17 @@ func (m *ValidateDataSourceConfig_Request) Reset()         { *m = ValidateDataSo
 func (m *ValidateDataSourceConfig_Request) String() string { return proto.CompactTextString(m) }
 func (*ValidateDataSourceConfig_Request) ProtoMessage()    {}
 func (*ValidateDataSourceConfig_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{10, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{10, 0}
 }
+
 func (m *ValidateDataSourceConfig_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateDataSourceConfig_Request.Unmarshal(m, b)
 }
 func (m *ValidateDataSourceConfig_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateDataSourceConfig_Request.Marshal(b, m, deterministic)
 }
-func (dst *ValidateDataSourceConfig_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateDataSourceConfig_Request.Merge(dst, src)
+func (m *ValidateDataSourceConfig_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateDataSourceConfig_Request.Merge(m, src)
 }
 func (m *ValidateDataSourceConfig_Request) XXX_Size() int {
 	return xxx_messageInfo_ValidateDataSourceConfig_Request.Size(m)
@@ -1359,7 +1395,7 @@ func (m *ValidateDataSourceConfig_Request) GetConfig() *DynamicValue {
 }
 
 type ValidateDataSourceConfig_Response struct {
-	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1369,16 +1405,17 @@ func (m *ValidateDataSourceConfig_Response) Reset()         { *m = ValidateDataS
 func (m *ValidateDataSourceConfig_Response) String() string { return proto.CompactTextString(m) }
 func (*ValidateDataSourceConfig_Response) ProtoMessage()    {}
 func (*ValidateDataSourceConfig_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{10, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{10, 1}
 }
+
 func (m *ValidateDataSourceConfig_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateDataSourceConfig_Response.Unmarshal(m, b)
 }
 func (m *ValidateDataSourceConfig_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateDataSourceConfig_Response.Marshal(b, m, deterministic)
 }
-func (dst *ValidateDataSourceConfig_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateDataSourceConfig_Response.Merge(dst, src)
+func (m *ValidateDataSourceConfig_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateDataSourceConfig_Response.Merge(m, src)
 }
 func (m *ValidateDataSourceConfig_Response) XXX_Size() int {
 	return xxx_messageInfo_ValidateDataSourceConfig_Response.Size(m)
@@ -1406,16 +1443,17 @@ func (m *Configure) Reset()         { *m = Configure{} }
 func (m *Configure) String() string { return proto.CompactTextString(m) }
 func (*Configure) ProtoMessage()    {}
 func (*Configure) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{11}
+	return fileDescriptor_22a625af4bc1cc87, []int{11}
 }
+
 func (m *Configure) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Configure.Unmarshal(m, b)
 }
 func (m *Configure) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Configure.Marshal(b, m, deterministic)
 }
-func (dst *Configure) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Configure.Merge(dst, src)
+func (m *Configure) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Configure.Merge(m, src)
 }
 func (m *Configure) XXX_Size() int {
 	return xxx_messageInfo_Configure.Size(m)
@@ -1427,8 +1465,8 @@ func (m *Configure) XXX_DiscardUnknown() {
 var xxx_messageInfo_Configure proto.InternalMessageInfo
 
 type Configure_Request struct {
-	TerraformVersion     string        `protobuf:"bytes,1,opt,name=terraform_version,json=terraformVersion" json:"terraform_version,omitempty"`
-	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config" json:"config,omitempty"`
+	TerraformVersion     string        `protobuf:"bytes,1,opt,name=terraform_version,json=terraformVersion,proto3" json:"terraform_version,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1438,16 +1476,17 @@ func (m *Configure_Request) Reset()         { *m = Configure_Request{} }
 func (m *Configure_Request) String() string { return proto.CompactTextString(m) }
 func (*Configure_Request) ProtoMessage()    {}
 func (*Configure_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{11, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{11, 0}
 }
+
 func (m *Configure_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Configure_Request.Unmarshal(m, b)
 }
 func (m *Configure_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Configure_Request.Marshal(b, m, deterministic)
 }
-func (dst *Configure_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Configure_Request.Merge(dst, src)
+func (m *Configure_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Configure_Request.Merge(m, src)
 }
 func (m *Configure_Request) XXX_Size() int {
 	return xxx_messageInfo_Configure_Request.Size(m)
@@ -1473,7 +1512,7 @@ func (m *Configure_Request) GetConfig() *DynamicValue {
 }
 
 type Configure_Response struct {
-	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1483,16 +1522,17 @@ func (m *Configure_Response) Reset()         { *m = Configure_Response{} }
 func (m *Configure_Response) String() string { return proto.CompactTextString(m) }
 func (*Configure_Response) ProtoMessage()    {}
 func (*Configure_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{11, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{11, 1}
 }
+
 func (m *Configure_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Configure_Response.Unmarshal(m, b)
 }
 func (m *Configure_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Configure_Response.Marshal(b, m, deterministic)
 }
-func (dst *Configure_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Configure_Response.Merge(dst, src)
+func (m *Configure_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Configure_Response.Merge(m, src)
 }
 func (m *Configure_Response) XXX_Size() int {
 	return xxx_messageInfo_Configure_Response.Size(m)
@@ -1520,16 +1560,17 @@ func (m *ReadResource) Reset()         { *m = ReadResource{} }
 func (m *ReadResource) String() string { return proto.CompactTextString(m) }
 func (*ReadResource) ProtoMessage()    {}
 func (*ReadResource) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{12}
+	return fileDescriptor_22a625af4bc1cc87, []int{12}
 }
+
 func (m *ReadResource) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadResource.Unmarshal(m, b)
 }
 func (m *ReadResource) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadResource.Marshal(b, m, deterministic)
 }
-func (dst *ReadResource) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadResource.Merge(dst, src)
+func (m *ReadResource) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadResource.Merge(m, src)
 }
 func (m *ReadResource) XXX_Size() int {
 	return xxx_messageInfo_ReadResource.Size(m)
@@ -1541,8 +1582,8 @@ func (m *ReadResource) XXX_DiscardUnknown() {
 var xxx_messageInfo_ReadResource proto.InternalMessageInfo
 
 type ReadResource_Request struct {
-	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	CurrentState         *DynamicValue `protobuf:"bytes,2,opt,name=current_state,json=currentState" json:"current_state,omitempty"`
+	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	CurrentState         *DynamicValue `protobuf:"bytes,2,opt,name=current_state,json=currentState,proto3" json:"current_state,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1552,16 +1593,17 @@ func (m *ReadResource_Request) Reset()         { *m = ReadResource_Request{} }
 func (m *ReadResource_Request) String() string { return proto.CompactTextString(m) }
 func (*ReadResource_Request) ProtoMessage()    {}
 func (*ReadResource_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{12, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{12, 0}
 }
+
 func (m *ReadResource_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadResource_Request.Unmarshal(m, b)
 }
 func (m *ReadResource_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadResource_Request.Marshal(b, m, deterministic)
 }
-func (dst *ReadResource_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadResource_Request.Merge(dst, src)
+func (m *ReadResource_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadResource_Request.Merge(m, src)
 }
 func (m *ReadResource_Request) XXX_Size() int {
 	return xxx_messageInfo_ReadResource_Request.Size(m)
@@ -1587,8 +1629,8 @@ func (m *ReadResource_Request) GetCurrentState() *DynamicValue {
 }
 
 type ReadResource_Response struct {
-	NewState             *DynamicValue `protobuf:"bytes,1,opt,name=new_state,json=newState" json:"new_state,omitempty"`
-	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	NewState             *DynamicValue `protobuf:"bytes,1,opt,name=new_state,json=newState,proto3" json:"new_state,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1598,16 +1640,17 @@ func (m *ReadResource_Response) Reset()         { *m = ReadResource_Response{} }
 func (m *ReadResource_Response) String() string { return proto.CompactTextString(m) }
 func (*ReadResource_Response) ProtoMessage()    {}
 func (*ReadResource_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{12, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{12, 1}
 }
+
 func (m *ReadResource_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadResource_Response.Unmarshal(m, b)
 }
 func (m *ReadResource_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadResource_Response.Marshal(b, m, deterministic)
 }
-func (dst *ReadResource_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadResource_Response.Merge(dst, src)
+func (m *ReadResource_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadResource_Response.Merge(m, src)
 }
 func (m *ReadResource_Response) XXX_Size() int {
 	return xxx_messageInfo_ReadResource_Response.Size(m)
@@ -1642,16 +1685,17 @@ func (m *PlanResourceChange) Reset()         { *m = PlanResourceChange{} }
 func (m *PlanResourceChange) String() string { return proto.CompactTextString(m) }
 func (*PlanResourceChange) ProtoMessage()    {}
 func (*PlanResourceChange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{13}
+	return fileDescriptor_22a625af4bc1cc87, []int{13}
 }
+
 func (m *PlanResourceChange) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlanResourceChange.Unmarshal(m, b)
 }
 func (m *PlanResourceChange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlanResourceChange.Marshal(b, m, deterministic)
 }
-func (dst *PlanResourceChange) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlanResourceChange.Merge(dst, src)
+func (m *PlanResourceChange) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlanResourceChange.Merge(m, src)
 }
 func (m *PlanResourceChange) XXX_Size() int {
 	return xxx_messageInfo_PlanResourceChange.Size(m)
@@ -1663,10 +1707,10 @@ func (m *PlanResourceChange) XXX_DiscardUnknown() {
 var xxx_messageInfo_PlanResourceChange proto.InternalMessageInfo
 
 type PlanResourceChange_Request struct {
-	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	PriorState           *DynamicValue `protobuf:"bytes,2,opt,name=prior_state,json=priorState" json:"prior_state,omitempty"`
-	ProposedNewState     *DynamicValue `protobuf:"bytes,3,opt,name=proposed_new_state,json=proposedNewState" json:"proposed_new_state,omitempty"`
-	Config               *DynamicValue `protobuf:"bytes,4,opt,name=config" json:"config,omitempty"`
+	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	PriorState           *DynamicValue `protobuf:"bytes,2,opt,name=prior_state,json=priorState,proto3" json:"prior_state,omitempty"`
+	ProposedNewState     *DynamicValue `protobuf:"bytes,3,opt,name=proposed_new_state,json=proposedNewState,proto3" json:"proposed_new_state,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
 	PriorPrivate         []byte        `protobuf:"bytes,5,opt,name=prior_private,json=priorPrivate,proto3" json:"prior_private,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
@@ -1677,16 +1721,17 @@ func (m *PlanResourceChange_Request) Reset()         { *m = PlanResourceChange_R
 func (m *PlanResourceChange_Request) String() string { return proto.CompactTextString(m) }
 func (*PlanResourceChange_Request) ProtoMessage()    {}
 func (*PlanResourceChange_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{13, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{13, 0}
 }
+
 func (m *PlanResourceChange_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlanResourceChange_Request.Unmarshal(m, b)
 }
 func (m *PlanResourceChange_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlanResourceChange_Request.Marshal(b, m, deterministic)
 }
-func (dst *PlanResourceChange_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlanResourceChange_Request.Merge(dst, src)
+func (m *PlanResourceChange_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlanResourceChange_Request.Merge(m, src)
 }
 func (m *PlanResourceChange_Request) XXX_Size() int {
 	return xxx_messageInfo_PlanResourceChange_Request.Size(m)
@@ -1733,10 +1778,10 @@ func (m *PlanResourceChange_Request) GetPriorPrivate() []byte {
 }
 
 type PlanResourceChange_Response struct {
-	PlannedState         *DynamicValue    `protobuf:"bytes,1,opt,name=planned_state,json=plannedState" json:"planned_state,omitempty"`
-	RequiresReplace      []*AttributePath `protobuf:"bytes,2,rep,name=requires_replace,json=requiresReplace" json:"requires_replace,omitempty"`
+	PlannedState         *DynamicValue    `protobuf:"bytes,1,opt,name=planned_state,json=plannedState,proto3" json:"planned_state,omitempty"`
+	RequiresReplace      []*AttributePath `protobuf:"bytes,2,rep,name=requires_replace,json=requiresReplace,proto3" json:"requires_replace,omitempty"`
 	PlannedPrivate       []byte           `protobuf:"bytes,3,opt,name=planned_private,json=plannedPrivate,proto3" json:"planned_private,omitempty"`
-	Diagnostics          []*Diagnostic    `protobuf:"bytes,4,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic    `protobuf:"bytes,4,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -1746,16 +1791,17 @@ func (m *PlanResourceChange_Response) Reset()         { *m = PlanResourceChange_
 func (m *PlanResourceChange_Response) String() string { return proto.CompactTextString(m) }
 func (*PlanResourceChange_Response) ProtoMessage()    {}
 func (*PlanResourceChange_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{13, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{13, 1}
 }
+
 func (m *PlanResourceChange_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PlanResourceChange_Response.Unmarshal(m, b)
 }
 func (m *PlanResourceChange_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PlanResourceChange_Response.Marshal(b, m, deterministic)
 }
-func (dst *PlanResourceChange_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PlanResourceChange_Response.Merge(dst, src)
+func (m *PlanResourceChange_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlanResourceChange_Response.Merge(m, src)
 }
 func (m *PlanResourceChange_Response) XXX_Size() int {
 	return xxx_messageInfo_PlanResourceChange_Response.Size(m)
@@ -1804,16 +1850,17 @@ func (m *ApplyResourceChange) Reset()         { *m = ApplyResourceChange{} }
 func (m *ApplyResourceChange) String() string { return proto.CompactTextString(m) }
 func (*ApplyResourceChange) ProtoMessage()    {}
 func (*ApplyResourceChange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{14}
+	return fileDescriptor_22a625af4bc1cc87, []int{14}
 }
+
 func (m *ApplyResourceChange) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ApplyResourceChange.Unmarshal(m, b)
 }
 func (m *ApplyResourceChange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ApplyResourceChange.Marshal(b, m, deterministic)
 }
-func (dst *ApplyResourceChange) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ApplyResourceChange.Merge(dst, src)
+func (m *ApplyResourceChange) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ApplyResourceChange.Merge(m, src)
 }
 func (m *ApplyResourceChange) XXX_Size() int {
 	return xxx_messageInfo_ApplyResourceChange.Size(m)
@@ -1825,10 +1872,10 @@ func (m *ApplyResourceChange) XXX_DiscardUnknown() {
 var xxx_messageInfo_ApplyResourceChange proto.InternalMessageInfo
 
 type ApplyResourceChange_Request struct {
-	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	PriorState           *DynamicValue `protobuf:"bytes,2,opt,name=prior_state,json=priorState" json:"prior_state,omitempty"`
-	PlannedState         *DynamicValue `protobuf:"bytes,3,opt,name=planned_state,json=plannedState" json:"planned_state,omitempty"`
-	Config               *DynamicValue `protobuf:"bytes,4,opt,name=config" json:"config,omitempty"`
+	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	PriorState           *DynamicValue `protobuf:"bytes,2,opt,name=prior_state,json=priorState,proto3" json:"prior_state,omitempty"`
+	PlannedState         *DynamicValue `protobuf:"bytes,3,opt,name=planned_state,json=plannedState,proto3" json:"planned_state,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
 	PlannedPrivate       []byte        `protobuf:"bytes,5,opt,name=planned_private,json=plannedPrivate,proto3" json:"planned_private,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
@@ -1839,16 +1886,17 @@ func (m *ApplyResourceChange_Request) Reset()         { *m = ApplyResourceChange
 func (m *ApplyResourceChange_Request) String() string { return proto.CompactTextString(m) }
 func (*ApplyResourceChange_Request) ProtoMessage()    {}
 func (*ApplyResourceChange_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{14, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{14, 0}
 }
+
 func (m *ApplyResourceChange_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ApplyResourceChange_Request.Unmarshal(m, b)
 }
 func (m *ApplyResourceChange_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ApplyResourceChange_Request.Marshal(b, m, deterministic)
 }
-func (dst *ApplyResourceChange_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ApplyResourceChange_Request.Merge(dst, src)
+func (m *ApplyResourceChange_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ApplyResourceChange_Request.Merge(m, src)
 }
 func (m *ApplyResourceChange_Request) XXX_Size() int {
 	return xxx_messageInfo_ApplyResourceChange_Request.Size(m)
@@ -1895,9 +1943,9 @@ func (m *ApplyResourceChange_Request) GetPlannedPrivate() []byte {
 }
 
 type ApplyResourceChange_Response struct {
-	NewState             *DynamicValue `protobuf:"bytes,1,opt,name=new_state,json=newState" json:"new_state,omitempty"`
+	NewState             *DynamicValue `protobuf:"bytes,1,opt,name=new_state,json=newState,proto3" json:"new_state,omitempty"`
 	Private              []byte        `protobuf:"bytes,2,opt,name=private,proto3" json:"private,omitempty"`
-	Diagnostics          []*Diagnostic `protobuf:"bytes,3,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,3,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -1907,16 +1955,17 @@ func (m *ApplyResourceChange_Response) Reset()         { *m = ApplyResourceChang
 func (m *ApplyResourceChange_Response) String() string { return proto.CompactTextString(m) }
 func (*ApplyResourceChange_Response) ProtoMessage()    {}
 func (*ApplyResourceChange_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{14, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{14, 1}
 }
+
 func (m *ApplyResourceChange_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ApplyResourceChange_Response.Unmarshal(m, b)
 }
 func (m *ApplyResourceChange_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ApplyResourceChange_Response.Marshal(b, m, deterministic)
 }
-func (dst *ApplyResourceChange_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ApplyResourceChange_Response.Merge(dst, src)
+func (m *ApplyResourceChange_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ApplyResourceChange_Response.Merge(m, src)
 }
 func (m *ApplyResourceChange_Response) XXX_Size() int {
 	return xxx_messageInfo_ApplyResourceChange_Response.Size(m)
@@ -1958,16 +2007,17 @@ func (m *ImportResourceState) Reset()         { *m = ImportResourceState{} }
 func (m *ImportResourceState) String() string { return proto.CompactTextString(m) }
 func (*ImportResourceState) ProtoMessage()    {}
 func (*ImportResourceState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{15}
+	return fileDescriptor_22a625af4bc1cc87, []int{15}
 }
+
 func (m *ImportResourceState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ImportResourceState.Unmarshal(m, b)
 }
 func (m *ImportResourceState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ImportResourceState.Marshal(b, m, deterministic)
 }
-func (dst *ImportResourceState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ImportResourceState.Merge(dst, src)
+func (m *ImportResourceState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ImportResourceState.Merge(m, src)
 }
 func (m *ImportResourceState) XXX_Size() int {
 	return xxx_messageInfo_ImportResourceState.Size(m)
@@ -1979,8 +2029,8 @@ func (m *ImportResourceState) XXX_DiscardUnknown() {
 var xxx_messageInfo_ImportResourceState proto.InternalMessageInfo
 
 type ImportResourceState_Request struct {
-	TypeName             string   `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	Id                   string   `protobuf:"bytes,2,opt,name=id" json:"id,omitempty"`
+	TypeName             string   `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	Id                   string   `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1990,16 +2040,17 @@ func (m *ImportResourceState_Request) Reset()         { *m = ImportResourceState
 func (m *ImportResourceState_Request) String() string { return proto.CompactTextString(m) }
 func (*ImportResourceState_Request) ProtoMessage()    {}
 func (*ImportResourceState_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{15, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{15, 0}
 }
+
 func (m *ImportResourceState_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ImportResourceState_Request.Unmarshal(m, b)
 }
 func (m *ImportResourceState_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ImportResourceState_Request.Marshal(b, m, deterministic)
 }
-func (dst *ImportResourceState_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ImportResourceState_Request.Merge(dst, src)
+func (m *ImportResourceState_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ImportResourceState_Request.Merge(m, src)
 }
 func (m *ImportResourceState_Request) XXX_Size() int {
 	return xxx_messageInfo_ImportResourceState_Request.Size(m)
@@ -2025,8 +2076,8 @@ func (m *ImportResourceState_Request) GetId() string {
 }
 
 type ImportResourceState_ImportedResource struct {
-	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	State                *DynamicValue `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
+	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	State                *DynamicValue `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
 	Private              []byte        `protobuf:"bytes,3,opt,name=private,proto3" json:"private,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
@@ -2037,16 +2088,17 @@ func (m *ImportResourceState_ImportedResource) Reset()         { *m = ImportReso
 func (m *ImportResourceState_ImportedResource) String() string { return proto.CompactTextString(m) }
 func (*ImportResourceState_ImportedResource) ProtoMessage()    {}
 func (*ImportResourceState_ImportedResource) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{15, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{15, 1}
 }
+
 func (m *ImportResourceState_ImportedResource) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ImportResourceState_ImportedResource.Unmarshal(m, b)
 }
 func (m *ImportResourceState_ImportedResource) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ImportResourceState_ImportedResource.Marshal(b, m, deterministic)
 }
-func (dst *ImportResourceState_ImportedResource) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ImportResourceState_ImportedResource.Merge(dst, src)
+func (m *ImportResourceState_ImportedResource) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ImportResourceState_ImportedResource.Merge(m, src)
 }
 func (m *ImportResourceState_ImportedResource) XXX_Size() int {
 	return xxx_messageInfo_ImportResourceState_ImportedResource.Size(m)
@@ -2079,8 +2131,8 @@ func (m *ImportResourceState_ImportedResource) GetPrivate() []byte {
 }
 
 type ImportResourceState_Response struct {
-	ImportedResources    []*ImportResourceState_ImportedResource `protobuf:"bytes,1,rep,name=imported_resources,json=importedResources" json:"imported_resources,omitempty"`
-	Diagnostics          []*Diagnostic                           `protobuf:"bytes,2,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	ImportedResources    []*ImportResourceState_ImportedResource `protobuf:"bytes,1,rep,name=imported_resources,json=importedResources,proto3" json:"imported_resources,omitempty"`
+	Diagnostics          []*Diagnostic                           `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                                `json:"-"`
 	XXX_unrecognized     []byte                                  `json:"-"`
 	XXX_sizecache        int32                                   `json:"-"`
@@ -2090,16 +2142,17 @@ func (m *ImportResourceState_Response) Reset()         { *m = ImportResourceStat
 func (m *ImportResourceState_Response) String() string { return proto.CompactTextString(m) }
 func (*ImportResourceState_Response) ProtoMessage()    {}
 func (*ImportResourceState_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{15, 2}
+	return fileDescriptor_22a625af4bc1cc87, []int{15, 2}
 }
+
 func (m *ImportResourceState_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ImportResourceState_Response.Unmarshal(m, b)
 }
 func (m *ImportResourceState_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ImportResourceState_Response.Marshal(b, m, deterministic)
 }
-func (dst *ImportResourceState_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ImportResourceState_Response.Merge(dst, src)
+func (m *ImportResourceState_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ImportResourceState_Response.Merge(m, src)
 }
 func (m *ImportResourceState_Response) XXX_Size() int {
 	return xxx_messageInfo_ImportResourceState_Response.Size(m)
@@ -2134,16 +2187,17 @@ func (m *ReadDataSource) Reset()         { *m = ReadDataSource{} }
 func (m *ReadDataSource) String() string { return proto.CompactTextString(m) }
 func (*ReadDataSource) ProtoMessage()    {}
 func (*ReadDataSource) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{16}
+	return fileDescriptor_22a625af4bc1cc87, []int{16}
 }
+
 func (m *ReadDataSource) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadDataSource.Unmarshal(m, b)
 }
 func (m *ReadDataSource) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadDataSource.Marshal(b, m, deterministic)
 }
-func (dst *ReadDataSource) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadDataSource.Merge(dst, src)
+func (m *ReadDataSource) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadDataSource.Merge(m, src)
 }
 func (m *ReadDataSource) XXX_Size() int {
 	return xxx_messageInfo_ReadDataSource.Size(m)
@@ -2155,8 +2209,8 @@ func (m *ReadDataSource) XXX_DiscardUnknown() {
 var xxx_messageInfo_ReadDataSource proto.InternalMessageInfo
 
 type ReadDataSource_Request struct {
-	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName" json:"type_name,omitempty"`
-	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config" json:"config,omitempty"`
+	TypeName             string        `protobuf:"bytes,1,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -2166,16 +2220,17 @@ func (m *ReadDataSource_Request) Reset()         { *m = ReadDataSource_Request{}
 func (m *ReadDataSource_Request) String() string { return proto.CompactTextString(m) }
 func (*ReadDataSource_Request) ProtoMessage()    {}
 func (*ReadDataSource_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{16, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{16, 0}
 }
+
 func (m *ReadDataSource_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadDataSource_Request.Unmarshal(m, b)
 }
 func (m *ReadDataSource_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadDataSource_Request.Marshal(b, m, deterministic)
 }
-func (dst *ReadDataSource_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadDataSource_Request.Merge(dst, src)
+func (m *ReadDataSource_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadDataSource_Request.Merge(m, src)
 }
 func (m *ReadDataSource_Request) XXX_Size() int {
 	return xxx_messageInfo_ReadDataSource_Request.Size(m)
@@ -2201,8 +2256,8 @@ func (m *ReadDataSource_Request) GetConfig() *DynamicValue {
 }
 
 type ReadDataSource_Response struct {
-	State                *DynamicValue `protobuf:"bytes,1,opt,name=state" json:"state,omitempty"`
-	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	State                *DynamicValue `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -2212,16 +2267,17 @@ func (m *ReadDataSource_Response) Reset()         { *m = ReadDataSource_Response
 func (m *ReadDataSource_Response) String() string { return proto.CompactTextString(m) }
 func (*ReadDataSource_Response) ProtoMessage()    {}
 func (*ReadDataSource_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{16, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{16, 1}
 }
+
 func (m *ReadDataSource_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadDataSource_Response.Unmarshal(m, b)
 }
 func (m *ReadDataSource_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadDataSource_Response.Marshal(b, m, deterministic)
 }
-func (dst *ReadDataSource_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadDataSource_Response.Merge(dst, src)
+func (m *ReadDataSource_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadDataSource_Response.Merge(m, src)
 }
 func (m *ReadDataSource_Response) XXX_Size() int {
 	return xxx_messageInfo_ReadDataSource_Response.Size(m)
@@ -2256,16 +2312,17 @@ func (m *GetProvisionerSchema) Reset()         { *m = GetProvisionerSchema{} }
 func (m *GetProvisionerSchema) String() string { return proto.CompactTextString(m) }
 func (*GetProvisionerSchema) ProtoMessage()    {}
 func (*GetProvisionerSchema) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{17}
+	return fileDescriptor_22a625af4bc1cc87, []int{17}
 }
+
 func (m *GetProvisionerSchema) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetProvisionerSchema.Unmarshal(m, b)
 }
 func (m *GetProvisionerSchema) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetProvisionerSchema.Marshal(b, m, deterministic)
 }
-func (dst *GetProvisionerSchema) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProvisionerSchema.Merge(dst, src)
+func (m *GetProvisionerSchema) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProvisionerSchema.Merge(m, src)
 }
 func (m *GetProvisionerSchema) XXX_Size() int {
 	return xxx_messageInfo_GetProvisionerSchema.Size(m)
@@ -2286,16 +2343,17 @@ func (m *GetProvisionerSchema_Request) Reset()         { *m = GetProvisionerSche
 func (m *GetProvisionerSchema_Request) String() string { return proto.CompactTextString(m) }
 func (*GetProvisionerSchema_Request) ProtoMessage()    {}
 func (*GetProvisionerSchema_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{17, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{17, 0}
 }
+
 func (m *GetProvisionerSchema_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetProvisionerSchema_Request.Unmarshal(m, b)
 }
 func (m *GetProvisionerSchema_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetProvisionerSchema_Request.Marshal(b, m, deterministic)
 }
-func (dst *GetProvisionerSchema_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProvisionerSchema_Request.Merge(dst, src)
+func (m *GetProvisionerSchema_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProvisionerSchema_Request.Merge(m, src)
 }
 func (m *GetProvisionerSchema_Request) XXX_Size() int {
 	return xxx_messageInfo_GetProvisionerSchema_Request.Size(m)
@@ -2307,8 +2365,8 @@ func (m *GetProvisionerSchema_Request) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetProvisionerSchema_Request proto.InternalMessageInfo
 
 type GetProvisionerSchema_Response struct {
-	Provisioner          *Schema       `protobuf:"bytes,1,opt,name=provisioner" json:"provisioner,omitempty"`
-	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Provisioner          *Schema       `protobuf:"bytes,1,opt,name=provisioner,proto3" json:"provisioner,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -2318,16 +2376,17 @@ func (m *GetProvisionerSchema_Response) Reset()         { *m = GetProvisionerSch
 func (m *GetProvisionerSchema_Response) String() string { return proto.CompactTextString(m) }
 func (*GetProvisionerSchema_Response) ProtoMessage()    {}
 func (*GetProvisionerSchema_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{17, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{17, 1}
 }
+
 func (m *GetProvisionerSchema_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetProvisionerSchema_Response.Unmarshal(m, b)
 }
 func (m *GetProvisionerSchema_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetProvisionerSchema_Response.Marshal(b, m, deterministic)
 }
-func (dst *GetProvisionerSchema_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProvisionerSchema_Response.Merge(dst, src)
+func (m *GetProvisionerSchema_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProvisionerSchema_Response.Merge(m, src)
 }
 func (m *GetProvisionerSchema_Response) XXX_Size() int {
 	return xxx_messageInfo_GetProvisionerSchema_Response.Size(m)
@@ -2362,16 +2421,17 @@ func (m *ValidateProvisionerConfig) Reset()         { *m = ValidateProvisionerCo
 func (m *ValidateProvisionerConfig) String() string { return proto.CompactTextString(m) }
 func (*ValidateProvisionerConfig) ProtoMessage()    {}
 func (*ValidateProvisionerConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{18}
+	return fileDescriptor_22a625af4bc1cc87, []int{18}
 }
+
 func (m *ValidateProvisionerConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateProvisionerConfig.Unmarshal(m, b)
 }
 func (m *ValidateProvisionerConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateProvisionerConfig.Marshal(b, m, deterministic)
 }
-func (dst *ValidateProvisionerConfig) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateProvisionerConfig.Merge(dst, src)
+func (m *ValidateProvisionerConfig) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateProvisionerConfig.Merge(m, src)
 }
 func (m *ValidateProvisionerConfig) XXX_Size() int {
 	return xxx_messageInfo_ValidateProvisionerConfig.Size(m)
@@ -2383,7 +2443,7 @@ func (m *ValidateProvisionerConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_ValidateProvisionerConfig proto.InternalMessageInfo
 
 type ValidateProvisionerConfig_Request struct {
-	Config               *DynamicValue `protobuf:"bytes,1,opt,name=config" json:"config,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -2393,16 +2453,17 @@ func (m *ValidateProvisionerConfig_Request) Reset()         { *m = ValidateProvi
 func (m *ValidateProvisionerConfig_Request) String() string { return proto.CompactTextString(m) }
 func (*ValidateProvisionerConfig_Request) ProtoMessage()    {}
 func (*ValidateProvisionerConfig_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{18, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{18, 0}
 }
+
 func (m *ValidateProvisionerConfig_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateProvisionerConfig_Request.Unmarshal(m, b)
 }
 func (m *ValidateProvisionerConfig_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateProvisionerConfig_Request.Marshal(b, m, deterministic)
 }
-func (dst *ValidateProvisionerConfig_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateProvisionerConfig_Request.Merge(dst, src)
+func (m *ValidateProvisionerConfig_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateProvisionerConfig_Request.Merge(m, src)
 }
 func (m *ValidateProvisionerConfig_Request) XXX_Size() int {
 	return xxx_messageInfo_ValidateProvisionerConfig_Request.Size(m)
@@ -2421,7 +2482,7 @@ func (m *ValidateProvisionerConfig_Request) GetConfig() *DynamicValue {
 }
 
 type ValidateProvisionerConfig_Response struct {
-	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,1,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -2431,16 +2492,17 @@ func (m *ValidateProvisionerConfig_Response) Reset()         { *m = ValidateProv
 func (m *ValidateProvisionerConfig_Response) String() string { return proto.CompactTextString(m) }
 func (*ValidateProvisionerConfig_Response) ProtoMessage()    {}
 func (*ValidateProvisionerConfig_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{18, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{18, 1}
 }
+
 func (m *ValidateProvisionerConfig_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ValidateProvisionerConfig_Response.Unmarshal(m, b)
 }
 func (m *ValidateProvisionerConfig_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ValidateProvisionerConfig_Response.Marshal(b, m, deterministic)
 }
-func (dst *ValidateProvisionerConfig_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidateProvisionerConfig_Response.Merge(dst, src)
+func (m *ValidateProvisionerConfig_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidateProvisionerConfig_Response.Merge(m, src)
 }
 func (m *ValidateProvisionerConfig_Response) XXX_Size() int {
 	return xxx_messageInfo_ValidateProvisionerConfig_Response.Size(m)
@@ -2468,16 +2530,17 @@ func (m *ProvisionResource) Reset()         { *m = ProvisionResource{} }
 func (m *ProvisionResource) String() string { return proto.CompactTextString(m) }
 func (*ProvisionResource) ProtoMessage()    {}
 func (*ProvisionResource) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{19}
+	return fileDescriptor_22a625af4bc1cc87, []int{19}
 }
+
 func (m *ProvisionResource) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ProvisionResource.Unmarshal(m, b)
 }
 func (m *ProvisionResource) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ProvisionResource.Marshal(b, m, deterministic)
 }
-func (dst *ProvisionResource) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProvisionResource.Merge(dst, src)
+func (m *ProvisionResource) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProvisionResource.Merge(m, src)
 }
 func (m *ProvisionResource) XXX_Size() int {
 	return xxx_messageInfo_ProvisionResource.Size(m)
@@ -2489,8 +2552,8 @@ func (m *ProvisionResource) XXX_DiscardUnknown() {
 var xxx_messageInfo_ProvisionResource proto.InternalMessageInfo
 
 type ProvisionResource_Request struct {
-	Config               *DynamicValue `protobuf:"bytes,1,opt,name=config" json:"config,omitempty"`
-	Connection           *DynamicValue `protobuf:"bytes,2,opt,name=connection" json:"connection,omitempty"`
+	Config               *DynamicValue `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	Connection           *DynamicValue `protobuf:"bytes,2,opt,name=connection,proto3" json:"connection,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -2500,16 +2563,17 @@ func (m *ProvisionResource_Request) Reset()         { *m = ProvisionResource_Req
 func (m *ProvisionResource_Request) String() string { return proto.CompactTextString(m) }
 func (*ProvisionResource_Request) ProtoMessage()    {}
 func (*ProvisionResource_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{19, 0}
+	return fileDescriptor_22a625af4bc1cc87, []int{19, 0}
 }
+
 func (m *ProvisionResource_Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ProvisionResource_Request.Unmarshal(m, b)
 }
 func (m *ProvisionResource_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ProvisionResource_Request.Marshal(b, m, deterministic)
 }
-func (dst *ProvisionResource_Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProvisionResource_Request.Merge(dst, src)
+func (m *ProvisionResource_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProvisionResource_Request.Merge(m, src)
 }
 func (m *ProvisionResource_Request) XXX_Size() int {
 	return xxx_messageInfo_ProvisionResource_Request.Size(m)
@@ -2535,8 +2599,8 @@ func (m *ProvisionResource_Request) GetConnection() *DynamicValue {
 }
 
 type ProvisionResource_Response struct {
-	Output               string        `protobuf:"bytes,1,opt,name=output" json:"output,omitempty"`
-	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics" json:"diagnostics,omitempty"`
+	Output               string        `protobuf:"bytes,1,opt,name=output,proto3" json:"output,omitempty"`
+	Diagnostics          []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -2546,16 +2610,17 @@ func (m *ProvisionResource_Response) Reset()         { *m = ProvisionResource_Re
 func (m *ProvisionResource_Response) String() string { return proto.CompactTextString(m) }
 func (*ProvisionResource_Response) ProtoMessage()    {}
 func (*ProvisionResource_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_plugin_ee08732ea36f2b86, []int{19, 1}
+	return fileDescriptor_22a625af4bc1cc87, []int{19, 1}
 }
+
 func (m *ProvisionResource_Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ProvisionResource_Response.Unmarshal(m, b)
 }
 func (m *ProvisionResource_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ProvisionResource_Response.Marshal(b, m, deterministic)
 }
-func (dst *ProvisionResource_Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProvisionResource_Response.Merge(dst, src)
+func (m *ProvisionResource_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProvisionResource_Response.Merge(m, src)
 }
 func (m *ProvisionResource_Response) XXX_Size() int {
 	return xxx_messageInfo_ProvisionResource_Response.Size(m)
@@ -3277,9 +3342,9 @@ var _Provisioner_serviceDesc = grpc.ServiceDesc{
 	Metadata: "plugin.proto",
 }
 
-func init() { proto.RegisterFile("plugin.proto", fileDescriptor_plugin_ee08732ea36f2b86) }
+func init() { proto.RegisterFile("plugin.proto", fileDescriptor_22a625af4bc1cc87) }
 
-var fileDescriptor_plugin_ee08732ea36f2b86 = []byte{
+var fileDescriptor_22a625af4bc1cc87 = []byte{
 	// 1788 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x58, 0xcd, 0x8f, 0x1b, 0x49,
 	0x15, 0x4f, 0xbb, 0xc7, 0x33, 0xf6, 0xf3, 0x7c, 0x78, 0x2a, 0xa3, 0xe0, 0xf4, 0x06, 0x34, 0x78,

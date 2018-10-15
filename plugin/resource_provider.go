@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"log"
 	"net/rpc"
 
 	"github.com/hashicorp/go-plugin"
@@ -441,6 +442,7 @@ func (s *ResourceProviderServer) Stop(
 	_ interface{},
 	reply *ResourceProviderStopResponse) error {
 	err := s.Provider.Stop()
+	log.Printf("[DEBUG] ResourceProviderServer.Stop returning error: %#v", err)
 	*reply = ResourceProviderStopResponse{
 		Error: plugin.NewBasicError(err),
 	}
@@ -528,6 +530,8 @@ func (s *ResourceProviderServer) Apply(
 	args *ResourceProviderApplyArgs,
 	result *ResourceProviderApplyResponse) error {
 	state, err := s.Provider.Apply(args.Info, args.State, args.Diff)
+	log.Printf("[DEBUG] ResourceProviderServer.Apply returning error: %#v", err)
+
 	*result = ResourceProviderApplyResponse{
 		State: state,
 		Error: plugin.NewBasicError(err),
@@ -539,6 +543,7 @@ func (s *ResourceProviderServer) Diff(
 	args *ResourceProviderDiffArgs,
 	result *ResourceProviderDiffResponse) error {
 	diff, err := s.Provider.Diff(args.Info, args.State, args.Config)
+	log.Printf("[DEBUG] ResourceProviderServer.Diff returning error: %#v", err)
 	*result = ResourceProviderDiffResponse{
 		Diff:  diff,
 		Error: plugin.NewBasicError(err),
@@ -550,6 +555,7 @@ func (s *ResourceProviderServer) Refresh(
 	args *ResourceProviderRefreshArgs,
 	result *ResourceProviderRefreshResponse) error {
 	newState, err := s.Provider.Refresh(args.Info, args.State)
+	log.Printf("[DEBUG] ResourceProviderServer.Refresh returning error: %#v", err)
 	*result = ResourceProviderRefreshResponse{
 		State: newState,
 		Error: plugin.NewBasicError(err),
@@ -594,6 +600,7 @@ func (s *ResourceProviderServer) ReadDataDiff(
 	args *ResourceProviderReadDataDiffArgs,
 	result *ResourceProviderReadDataDiffResponse) error {
 	diff, err := s.Provider.ReadDataDiff(args.Info, args.Config)
+	log.Printf("[DEBUG] ResourceProviderServer.ReadDataDiff returning error: %#v", err)
 	*result = ResourceProviderReadDataDiffResponse{
 		Diff:  diff,
 		Error: plugin.NewBasicError(err),
@@ -605,6 +612,7 @@ func (s *ResourceProviderServer) ReadDataApply(
 	args *ResourceProviderReadDataApplyArgs,
 	result *ResourceProviderReadDataApplyResponse) error {
 	newState, err := s.Provider.ReadDataApply(args.Info, args.Diff)
+	log.Printf("[DEBUG] ResourceProviderServer.ReadDataApply returning error: %#v", err)
 	*result = ResourceProviderReadDataApplyResponse{
 		State: newState,
 		Error: plugin.NewBasicError(err),
