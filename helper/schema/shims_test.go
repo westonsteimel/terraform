@@ -362,6 +362,87 @@ func TestShimResourceDiff_Timeout_diff(t *testing.T) {
 	}
 }
 
+func TestShimResourceDiff_forceNew(t *testing.T) {
+	r := &Resource{
+		Schema: map[string]*Schema{
+			"foo": &Schema{
+				Type:     TypeInt,
+				Required: true,
+				ForceNew: true,
+			},
+		},
+	}
+
+	r.Create = func(d *ResourceData, m interface{}) error {
+		d.SetId("foo")
+		return nil
+	}
+
+	raw, err := config.NewRawConfig(
+		map[string]interface{}{
+			"foo": 42,
+		})
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	var s *terraform.InstanceState = nil
+	conf := terraform.NewResourceConfig(raw)
+
+	actual, err := r.Diff(s, conf, nil)
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	expected := &terraform.InstanceDiff{
+		Attributes: map[string]*terraform.ResourceAttrDiff{
+			"foo": &terraform.ResourceAttrDiff{
+				New: "42",
+			},
+		},
+	}
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Fatalf("Not equal Diff:\n\texpected: %#v\n\tactual: %#v", expected.Meta, actual.Meta)
+	}
+
+	// Shim
+	// apply this diff, so we have a state to compare
+	applied, err := r.Apply(s, actual, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// we're not testing Resource.Create, so we need to start with the "created" state
+	createdState := &terraform.InstanceState{
+		ID:         "foo",
+		Attributes: map[string]string{"id": "foo"},
+	}
+
+	testSchema := providers.Schema{
+		Version: uint64(r.SchemaVersion),
+		Block:   resourceSchemaToBlock(r.Schema),
+	}
+
+	initialVal, err := StateValueFromInstanceState(createdState, testSchema.Block.ImpliedType())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	appliedVal, err := StateValueFromInstanceState(applied, testSchema.Block.ImpliedType())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	d, err := DiffFromValues(initialVal, appliedVal, r)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if eq, _ := d.Same(expected); !eq {
+		t.Fatal(cmp.Diff(d, expected))
+	}
+}
+
 func TestShimResourceApply_destroy(t *testing.T) {
 	r := &Resource{
 		Schema: map[string]*Schema{

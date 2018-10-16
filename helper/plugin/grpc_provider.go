@@ -500,6 +500,8 @@ func (s *GRPCProviderServer) ApplyResourceChange(_ context.Context, req *proto.A
 		}
 	}
 
+	log.Printf("[DEBUG] GRPCProviderServer.ApplyResourceChange\npriorStateVal: %s\nplannedStateVal: %s\nres: %s\n",
+		pretty.Sprint(priorStateVal), pretty.Sprint(plannedStateVal), pretty.Sprint(res))
 	diff, err := schema.DiffFromValues(priorStateVal, plannedStateVal, res)
 	if err != nil {
 		resp.Diagnostics = convert.AppendProtoDiag(resp.Diagnostics, err)
