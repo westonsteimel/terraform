@@ -3,8 +3,10 @@ package plugin
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"strconv"
 
+	"github.com/kr/pretty"
 	"github.com/zclconf/go-cty/cty"
 	"github.com/zclconf/go-cty/cty/msgpack"
 	context "golang.org/x/net/context"
