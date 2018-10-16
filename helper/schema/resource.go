@@ -203,6 +203,10 @@ func (r *Resource) Apply(
 	s *terraform.InstanceState,
 	d *terraform.InstanceDiff,
 	meta interface{}) (*terraform.InstanceState, error) {
+
+	log.Printf("[DEBUG] Resource.Apply:\nstate: %s\n\ndiff: %s\n\nmeta: %s\n",
+		s, d, meta)
+
 	data, err := schemaMap(r.Schema).Data(s, d)
 	if err != nil {
 		return s, err

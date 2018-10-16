@@ -510,6 +510,7 @@ func (s *GRPCProviderServer) ApplyResourceChange(_ context.Context, req *proto.A
 
 	// a null state means we are destroying the instance
 	if plannedStateVal.IsNull() {
+		log.Println("[DEBUG] GRPCProviderServer.ApplyResourceChange -> plannedStateVal is NULL")
 		destroy = true
 		diff = &terraform.InstanceDiff{
 			Attributes: make(map[string]*terraform.ResourceAttrDiff),
@@ -517,6 +518,8 @@ func (s *GRPCProviderServer) ApplyResourceChange(_ context.Context, req *proto.A
 			Destroy:    true,
 		}
 	} else {
+		log.Printf("[DEBUG] GRPCProviderServer.ApplyResourceChange -> DiffFromValues\npriorStateVal: %s\nplannedStateVal: %s\nres: %s\n",
+			pretty.Sprint(priorStateVal), pretty.Sprint(plannedStateVal), pretty.Sprint(res))
 		diff, err = schema.DiffFromValues(priorStateVal, plannedStateVal, res)
 		if err != nil {
 			resp.Diagnostics = convert.AppendProtoDiag(resp.Diagnostics, err)
