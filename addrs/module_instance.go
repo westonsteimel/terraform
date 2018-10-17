@@ -264,6 +264,12 @@ func (m ModuleInstance) String() string {
 	return buf.String()
 }
 
+// Equal returns true if the receiver and the given other value
+// contains the exact same parts.
+func (m ModuleInstance) Equal(o ModuleInstance) bool {
+	return m.String() == o.String()
+}
+
 // Less returns true if the receiver should sort before the given other value
 // in a sorted list of addresses.
 func (m ModuleInstance) Less(o ModuleInstance) bool {

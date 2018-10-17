@@ -3,6 +3,9 @@ package terraform
 import (
 	"fmt"
 	"sort"
+
+	"github.com/hashicorp/terraform/addrs"
+	"github.com/hashicorp/terraform/states"
 )
 
 // StateFilter is responsible for filtering and searching a state.
@@ -16,7 +19,7 @@ import (
 // will not watch State for changes and do this for you. If you filter after
 // changing the State without calling Reset, the behavior is not defined.
 type StateFilter struct {
-	State *State
+	State *states.State
 }
 
 // Filter takes the addresses specified by fs and finds all the matches.
@@ -24,26 +27,33 @@ type StateFilter struct {
 // ParseResourceAddress.
 func (f *StateFilter) Filter(fs ...string) ([]*StateFilterResult, error) {
 	// Parse all the addresses
-	as := make([]*ResourceAddress, len(fs))
+	as := make([]addrs.Targetable, len(fs))
 	for i, v := range fs {
-		a, err := ParseResourceAddress(v)
-		if err != nil {
-			return nil, fmt.Errorf("Error parsing address '%s': %s", v, err)
+		if addr, diags := addrs.ParseModuleInstanceStr(v); !diags.HasErrors() {
+			as[i] = addr
+			continue
 		}
-
-		as[i] = a
+		if addr, diags := addrs.ParseAbsResourceStr(v); !diags.HasErrors() {
+			as[i] = addr
+			continue
+		}
+		if addr, diags := addrs.ParseAbsResourceInstanceStr(v); !diags.HasErrors() {
+			as[i] = addr
+			continue
+		}
+		return nil, fmt.Errorf("Error parsing address '%s'", v)
 	}
 
 	// If we weren't given any filters, then we list all
 	if len(fs) == 0 {
-		as = append(as, &ResourceAddress{Index: -1})
+		as = append(as, addrs.RootModuleInstance)
 	}
 
 	// Filter each of the address. We keep track of this in a map to
 	// strip duplicates.
 	resultSet := make(map[string]*StateFilterResult)
-	for _, a := range as {
-		for _, r := range f.filterSingle(a) {
+	for _, addr := range as {
+		for _, r := range f.filterSingle(addr) {
 			resultSet[r.String()] = r
 		}
 	}
@@ -59,22 +69,29 @@ func (f *StateFilter) Filter(fs ...string) ([]*StateFilterResult, error) {
 	return results, nil
 }
 
-func (f *StateFilter) filterSingle(a *ResourceAddress) []*StateFilterResult {
+func (f *StateFilter) filterSingle(addr addrs.Targetable) []*StateFilterResult {
 	// The slice to keep track of results
 	var results []*StateFilterResult
 
+	// Check if we received a module instance address that
+	// should be used as module filter, and if not set the
+	// filter to the root module instance.
+	filter, ok := addr.(addrs.ModuleInstance)
+	if !ok {
+		filter = addrs.RootModuleInstance
+	}
+
 	// Go through modules first.
-	modules := make([]*ModuleState, 0, len(f.State.Modules))
+	modules := make([]*states.Module, 0, len(f.State.Modules))
 	for _, m := range f.State.Modules {
-		if f.relevant(a, m) {
+		if filter.IsRoot() || filter.Equal(m.Addr) {
 			modules = append(modules, m)
 
-			// Only add the module to the results if we haven't specified a type.
-			// We also ignore the root module.
-			if a.Type == "" && len(m.Path) > 1 {
+			// Only add the module to the results if we searched
+			// for a specific non-root module and found a match.
+			if !filter.IsRoot() && filter.Equal(m.Addr) {
 				results = append(results, &StateFilterResult{
-					Path:    m.Path[1:],
-					Address: (&ResourceAddress{Path: m.Path[1:]}).String(),
+					Address: m.Addr.String(),
 					Value:   m,
 				})
 			}
@@ -84,78 +101,13 @@ func (f *StateFilter) filterSingle(a *ResourceAddress) []*StateFilterResult {
 	// With the modules set, go through all the resources within
 	// the modules to find relevant resources.
 	for _, m := range modules {
-		for n, r := range m.Resources {
-			// The name in the state contains valuable information. Parse.
-			key, err := ParseResourceStateKey(n)
-			if err != nil {
-				// If we get an error parsing, then just ignore it
-				// out of the state.
-				continue
-			}
-
-			// Older states and test fixtures often don't contain the
-			// type directly on the ResourceState. We add this so StateFilter
-			// is a bit more robust.
-			if r.Type == "" {
-				r.Type = key.Type
-			}
-
-			if f.relevant(a, r) {
-				if a.Name != "" && a.Name != key.Name {
-					// Name doesn't match
-					continue
-				}
-
-				if a.Index >= 0 && key.Index != a.Index {
-					// Index doesn't match
-					continue
-				}
-
-				if a.Name != "" && a.Name != key.Name {
-					continue
-				}
-
-				// Build the address for this resource
-				addr := &ResourceAddress{
-					Path:  m.Path[1:],
-					Name:  key.Name,
-					Type:  key.Type,
-					Index: key.Index,
-				}
-
-				// Add the resource level result
-				resourceResult := &StateFilterResult{
-					Path:    addr.Path,
-					Address: addr.String(),
-					Value:   r,
-				}
-				if !a.InstanceTypeSet {
-					results = append(results, resourceResult)
-				}
-
-				// Add the instances
-				if r.Primary != nil {
-					addr.InstanceType = TypePrimary
-					addr.InstanceTypeSet = false
+		for _, r := range m.Resources {
+			for key, is := range r.Instances {
+				if f.relevant(addr, r.Addr.Absolute(m.Addr), key) {
 					results = append(results, &StateFilterResult{
-						Path:    addr.Path,
-						Address: addr.String(),
-						Parent:  resourceResult,
-						Value:   r.Primary,
+						Address: r.Addr.Absolute(m.Addr).Instance(key).String(),
+						Value:   is,
 					})
-				}
-
-				for _, instance := range r.Deposed {
-					if f.relevant(a, instance) {
-						addr.InstanceType = TypeDeposed
-						addr.InstanceTypeSet = true
-						results = append(results, &StateFilterResult{
-							Path:    addr.Path,
-							Address: addr.String(),
-							Parent:  resourceResult,
-							Value:   instance,
-						})
-					}
 				}
 			}
 		}
@@ -164,62 +116,31 @@ func (f *StateFilter) filterSingle(a *ResourceAddress) []*StateFilterResult {
 	return results
 }
 
-// relevant checks for relevance of this address against the given value.
-func (f *StateFilter) relevant(addr *ResourceAddress, raw interface{}) bool {
-	switch v := raw.(type) {
-	case *ModuleState:
-		path := v.Path[1:]
-
-		if len(addr.Path) > len(path) {
-			// Longer path in address means there is no way we match.
-			return false
+func (f *StateFilter) relevant(filter addrs.Targetable, addr addrs.AbsResource, key addrs.InstanceKey) bool {
+	switch filter := filter.(type) {
+	case addrs.AbsResource:
+		if filter.Module != nil {
+			return filter.Equal(addr)
 		}
-
-		// Check for a prefix match
-		for i, p := range addr.Path {
-			if path[i] != p {
-				// Any mismatches don't match.
-				return false
-			}
+		return filter.Resource.Equal(addr.Resource)
+	case addrs.AbsResourceInstance:
+		if filter.Module != nil {
+			return filter.Equal(addr.Instance(key))
 		}
-
-		return true
-	case *ResourceState:
-		if addr.Type == "" {
-			// If we have no resource type, then we're interested in all!
-			return true
-		}
-
-		// If the type doesn't match we fail immediately
-		if v.Type != addr.Type {
-			return false
-		}
-
-		return true
+		return filter.Resource.Equal(addr.Resource.Instance(key))
 	default:
-		// If we don't know about it, let's just say no
-		return false
+		return true
 	}
 }
 
-// StateFilterResult is a single result from a filter operation. Filter
-// can match multiple things within a state (module, resource, instance, etc.)
-// and this unifies that.
+// StateFilterResult is a single result from a filter operation. Filter can
+// match multiple things within a state (curently modules and resources).
 type StateFilterResult struct {
-	// Module path of the result
-	Path []string
-
 	// Address is the address that can be used to reference this exact result.
 	Address string
 
-	// Parent, if non-nil, is a parent of this result. For instances, the
-	// parent would be a resource. For resources, the parent would be
-	// a module. For modules, this is currently nil.
-	Parent *StateFilterResult
-
 	// Value is the actual value. This must be type switched on. It can be
-	// any data structures that `State` can hold: `ModuleState`,
-	// `ResourceState`, `InstanceState`.
+	// any either a `states.Module` or `states.ResourceInstance`.
 	Value interface{}
 }
 
@@ -229,12 +150,10 @@ func (r *StateFilterResult) String() string {
 
 func (r *StateFilterResult) sortedType() int {
 	switch r.Value.(type) {
-	case *ModuleState:
+	case *states.Module:
 		return 0
-	case *ResourceState:
+	case *states.ResourceInstance:
 		return 1
-	case *InstanceState:
-		return 2
 	default:
 		return 50
 	}
@@ -249,13 +168,6 @@ func (s StateFilterResultSlice) Len() int      { return len(s) }
 func (s StateFilterResultSlice) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
 func (s StateFilterResultSlice) Less(i, j int) bool {
 	a, b := s[i], s[j]
-
-	// if these address contain an index, we want to sort by index rather than name
-	addrA, errA := ParseResourceAddress(a.Address)
-	addrB, errB := ParseResourceAddress(b.Address)
-	if errA == nil && errB == nil && addrA.Name == addrB.Name && addrA.Index != addrB.Index {
-		return addrA.Index < addrB.Index
-	}
 
 	// If the addresses are different it is just lexographic sorting
 	if a.Address != b.Address {

@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"reflect"
 	"testing"
+
+	"github.com/hashicorp/terraform/states/statefile"
 )
 
 func TestStateFilterFilter(t *testing.T) {
@@ -137,14 +139,14 @@ func TestStateFilterFilter(t *testing.T) {
 			t.Fatalf("%q: err: %s", n, err)
 		}
 
-		state, err := ReadState(f)
+		stateFile, err := statefile.Read(f)
 		f.Close()
 		if err != nil {
 			t.Fatalf("%q: err: %s", n, err)
 		}
 
 		// Create the filter
-		filter := &StateFilter{State: state}
+		filter := &StateFilter{State: stateFile.State}
 
 		// Filter!
 		results, err := filter.Filter(tc.Filters...)
